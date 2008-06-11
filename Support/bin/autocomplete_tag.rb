@@ -16,7 +16,9 @@ With: http://macromates.com/svn/Bundles/trunk/Support
 end
 
 require File.dirname(__FILE__) + '/../lib/extract_tag'
+require File.dirname(__FILE__) + '/../lib/rails_helper'
 tag_name_partial = ENV['TM_SELECTED_TEXT'] || ENV['TM_CURRENT_WORD']
-list = Hobo::Dryml.autocomplete_tag(tag_name_partial, ENV['TM_FILEPATH'])
+rails_root = RailsHelper.rails_root(ENV['TM_FILEPATH'])
+list = Hobo::Dryml.autocomplete_tag(tag_name_partial, rails_root)
 result = TextMate::UI.request_item(:items => list.uniq.sort, :title => 'Select Hobo tag:')
 print result || list.inspect || tag_name_partial
